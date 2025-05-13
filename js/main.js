@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById('stakeNFTBtn')?.addEventListener('click', stakeNFT);
 
 function switchTab(tab) {
-  console.log('Switching to tab: ${tab}'); // Debug line
+  console.log(`Switching to tab: ${tab}`); // Debug line
 
   // Remove 'active' class from all main sections
   document.querySelectorAll('.main').forEach(div => div.classList.remove('active'));
@@ -41,9 +41,9 @@ function switchTab(tab) {
   }
 
   // Update active state of nav buttons
-  document.querySelectorAll('.footer button').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll(`.footer button`).forEach(btn => btn.classList.remove('active'));
 
-  const activeBtn = document.querySelector(`footer button[data-tab="${tab}"]`);
+  const activeBtn = document.querySelector(`.footer button[data-tab="${tab}"]`);
   
   if (activeBtn) {
     activeBtn.classList.add('active');
@@ -55,7 +55,7 @@ function switchTab(tab) {
 
 async function connectWallet() {
   try {
-    const wallet = await
+    const wallets = await
     tonConnect.getWallets();
     console.log("Available wallets:", wallets);
 
@@ -67,7 +67,7 @@ async function connectWallet() {
     const wallet = wallets[0]; //select first wallet
 
     const session = await
-    tonConnect.connect(wallet.bridgedUrl);
+    tonConnect.connect({bridgedUrl: wallet.bridgedUrl});
 
     console.log("Connect wallet address:", session.wallet.address);
 
