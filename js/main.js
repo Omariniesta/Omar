@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ✅ Initialize TonConnectUI
   const tonConnectUI = new window.TonConnectUI.TonConnectUI({
-    manifestUrl: 'https://raw.githubusercontent.com/ton-blockchain/ton-connect/master/packages/ui/react/src/demo/tonconnect-manifest.json',
+    manifestUrl: 'https://raw.githubusercontent.com/Omariniesta/dapp/main/tonconnect-manifest.json',
     buttonRootId: 'ton-connect-btn'
   });
 
