@@ -1,7 +1,10 @@
 {
-  "url": "https://omariniesta.github.io/dapp/",
+  "manifest_version": "0.1",
   "name": "Zyper Mini App",
-  "iconUrl": "https://omariniesta.github.io/dapp/icon.png",
+  "description": "Zyper is a mini app for community tasks, NFTs, and DeFi on TON.",
+  "url": "https://omariniesta.github.io/dapp/",
+  "iconUrl": "https://raw.githubusercontent.com/Omariniesta/Omar/main/icon.png",
   "termsOfUseUrl": "https://zyper.org/terms",
-  "privacyPolicyUrl": "https://zyper.org/privacy"
+  "privacyPolicyUrl": "https://zyper.org/privacy",
+  "bridgeUrl": "https://bridge.tonapi.io/bridge"
 }
