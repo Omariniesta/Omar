@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TON Connect Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Include TON Connect UI library -->
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+</head>
+<body>
+  <h1>TON Connect Wallet Test</h1>
+
+  <!-- Button placeholder -->
+  <div id="ton-connect-btn"></div>
+
+  <p>Wallet Address: <span id="walletAddress">Not connected</span></p>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      // Check if TON_CONNECT_UI is available
+      if (!window.TON_CONNECT_UI) {
+        alert('TON_CONNECT_UI failed to load!');
+        return;
+      }
+
+      const tonConnectUI = new window.TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://raw.githubusercontent.com/Omariniesta/dapp/main/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect-btn'
+      });
+
+      tonConnectUI.onStatusChange(walletInfo => {
+        if (walletInfo?.account?.address) {
+          document.getElementById("walletAddress").innerText = walletInfo.account.address;
+        } else {
+          document.getElementById("walletAddress").innerText = "Not connected";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
