@@ -4,32 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Zyper Mini App</title>
+
+  <!-- External Libraries -->
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest/dist/tonconnect.min.js"></script>
+
+  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
   <div class="header">Zyper</div>
 
+  <!-- Home Section -->
   <div id="home" class="main active">
     <div class="stats">
       <h3>User Stats</h3>
       <p id="username">Username: @loading...</p>
-      <p>Zyper Points: <span id="points">0</span> </p>
-      <p>Referrals: <span id="referrals">0</span> </p>
+      <p>Zyper Points: <span id="points">0</span></p>
+      <p>Referrals: <span id="referrals">0</span></p>
     </div>
     <button class="link-btn" data-tab="task-list">Start Task</button>
-    <button class="link-btn" data-tab="buy"">Buy NFT</button>
+    <button class="link-btn" data-tab="buy">Buy NFT</button>
     <button class="link-btn" data-tab="defi">DeFi</button>
     <button class="link-btn" onclick="window.open('https://zyper.org')">Visit Website</button>
   </div>
 
+  <!-- Task List Section -->
   <div id="task-list" class="main">
     <h3>Complete Tasks</h3>
     <div id="task-container"></div>
   </div>
 
+  <!-- Buy Section -->
   <div id="buy" class="main">
     <div class="buy">
       <div class="nft-preview">
@@ -39,37 +47,46 @@
     </div>
   </div>
 
+  <!-- DeFi Section -->
   <div id="defi" class="main">
-    <button class="link-btn" onclick="connectWallet()">Connect Wallet</button>
+    <div id="ton-connect-btn" class="link-btn">Connect Wallet</div>
     <p>Wallet Address: <span id="walletAddress">Not connected</span></p>
-    <p>Wallet Balance: <span id="walletBalance">0.00 TON</span></p><div class="staking-section">
-  <h3>NFT Staking</h3>
-  <div class="staking-controls">
-    <input type="text" id="nftIdInput" placeholder="Enter NFT ID" class="input-field">
-    <button class="link-btn" onclick="stakeNFT()">Stake NFT</button>
-  </div>
-  <div class="staking-status">
-    <h4>Staked NFTs</h4>
-    <div id="stakedNFTs"></div>
-  </div>
-</div>
+    <p>Wallet Balance: <span id="walletBalance">0.00 TON</span></p>
 
+    <div class="staking-section">
+      <h3>NFT Staking</h3>
+      <div class="staking-controls">
+        <input type="text" id="nftIdInput" placeholder="Enter NFT ID" class="input-field">
+        <button class="link-btn" id="stakeNFTBtn">Stake NFT</button> <!-- ✅ Fixed -->
+      </div>
+      <div class="staking-status">
+        <h4>Staked NFTs</h4>
+        <ul id="stakedNFTs"></ul>
+      </div>
+    </div>
   </div>
 
+  <!-- Navigation Footer -->
   <div class="footer nav">
     <button data-tab="home" class="active">
-      <i data-lucide="home"></i>Home</button>
+      <i data-lucide="home"></i>Home
+    </button>
     <button data-tab="task-list">
-      <i data-lucide="list-check"></i>Tasks</button>
+      <i data-lucide="list-check"></i>Tasks
+    </button>
     <button data-tab="buy">
-      <i data-lucide="image"></i>Buy</button>
+      <i data-lucide="image"></i>Buy
+    </button>
     <button data-tab="defi">
-      <i data-lucide="wallet"></i>DeFi</button>
+      <i data-lucide="wallet"></i>DeFi
+    </button>
   </div>
 
+  <!-- Your Scripts -->
   <script src="js/data.js"></script>
   <script src="js/tasks.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  <script type="module" src="js/main.js"></script> <!-- ✅ Keep this last -->
   <script>lucide.createIcons();</script>
 </body>
 </html>

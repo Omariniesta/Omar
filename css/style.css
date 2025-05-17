@@ -37,6 +37,26 @@ body {
   margin-bottom: 1rem;
 }
 
+#ton-connect-btn.link-btn {
+  display: inline-block;       /* Shrinks to fit content */
+  padding: 10px 20px;
+  background-color: #007bff;   /* Adjust as needed */
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 10px auto;           /* Center it horizontally */
+  width: auto;                 /* Prevent full width */
+}
+
+
+#ton-connect-btn.link-btn:hover {
+  background-color: #0056b3;   /* Hover effect */
+}
+
+
 .nft-preview {
   height: 200px;
   background: #e6f2ff;

@@ -1,99 +1,70 @@
-import Tonconnect, { TonConnect } from "@tonconnect/sdk"
+// main.js
+const stakeNFTs = [];
+
 document.addEventListener("DOMContentLoaded", function () {
   const tg = window.Telegram.WebApp;
   tg.ready();
 
-  //initialize icons
   lucide.createIcons();
 
+  // Telegram user info
   if (tg.initDataUnsafe?.user) {
     const user = tg.initDataUnsafe.user;
-    document.getElementById("username").innerText = "Username: @" + (user.username || "unknown");
+    document.getElementById("username").innerText =
+      "Username: @" + (user.username || "unknown");
   }
 
-  //add click event listners to all buttons with data-tab attribute
-
-  document.querySelectorAll('button[data-tab]').forEach(button => {
-    button.addEventListener('click', function () {
-        const tab = 
-        this.getAttribute('data-tab');
-        switchTab(tab);
+  // Navigation footer buttons
+  document.querySelectorAll(".footer button[data-tab]").forEach((button) => {
+    button.addEventListener("click", function () {
+      const tab = this.getAttribute("data-tab");
+      switchTab(tab);
     });
+  });
+
+  // Main section buttons
+  document.querySelectorAll('#home button[data-tab]').forEach(button => {
+    button.addEventListener('click', function () {
+      const tab = this.getAttribute('data-tab');
+      switchTab(tab);
+    });
+  });
+
+  // Button listeners
+  document.getElementById("stakeNFTBtn")?.addEventListener("click", stakeNFT);
+
+  // ✅ Initialize TonConnectUI
+  const tonConnectUI = new window.TonConnectUI.TonConnectUI({
+    manifestUrl: 'https://raw.githubusercontent.com/ton-blockchain/ton-connect/master/packages/ui/react/src/demo/tonconnect-manifest.json',
+    buttonRootId: 'ton-connect-btn'
+  });
+
+  // ✅ Listen for connection and show address
+  tonConnectUI.onStatusChange(walletInfo => {
+    if (walletInfo && walletInfo.account?.address) {
+      const address = walletInfo.account.address;
+      document.getElementById("walletAddress").innerText = address;
+    } else {
+      document.getElementById("walletAddress").innerText = "Not connected";
+    }
   });
 });
 
-
-//nft staking
-document.getElementById('stakeNFTBtn')?.addEventListener('click', stakeNFT);
-
+// Tab switching
 function switchTab(tab) {
-  console.log(`Switching to tab: ${tab}`); // Debug line
-
-  // Remove 'active' class from all main sections
-  document.querySelectorAll('.main').forEach(div => div.classList.remove('active'));
-
-  // Add 'active' class to the targeted section
+  document.querySelectorAll(".main").forEach((div) => div.classList.remove("active"));
   const targetSection = document.getElementById(tab);
-  if (targetSection) {
-    targetSection.classList.add('active');
-  } else {
-    console.warn('No section found for tab: ${tab}');
-  }
+  if (targetSection) targetSection.classList.add("active");
 
-  // Update active state of nav buttons
-  document.querySelectorAll(`.footer button`).forEach(btn => btn.classList.remove('active'));
-
+  document.querySelectorAll(".footer button").forEach((btn) => btn.classList.remove("active"));
   const activeBtn = document.querySelector(`.footer button[data-tab="${tab}"]`);
-  
-  if (activeBtn) {
-    activeBtn.classList.add('active');
-  }
+  if (activeBtn) activeBtn.classList.add("active");
 
-  // Refresh icons
   lucide.createIcons();
 }
 
-async function connectWallet() {
-  try {
-    const wallets = await
-    tonConnect.getWallets();
-    console.log("Available wallets:", wallets);
-
-    if (wallets.length === 0) {
-      alert("no wallet found. please install ton wallet.");
-      return;
-    }
-
-    const wallet = wallets[0]; //select first wallet
-
-    const session = await
-    tonConnect.connect({bridgedUrl: wallet.bridgedUrl});
-
-    console.log("Connect wallet address:", session.wallet.address);
-
-    document.getElementById("walletAddress").innerText = session.wallet.address;
-
-    //fetch balance (assuming ton sdk provide a method for it)
-    const balance = await
-    tonConnect.getBalance(session.wallet.address);
-
-    document.getElementById("walletBalance").innerText = '${balance} TON';
-  
-  } catch (error) {
-    console.error("Error connecting wallet:", error);
-    alert("error connecting wallet");
-
-  }
-  }
-
-  //attach event listner
-  document.addEventListener("DOMContentLoaded", () => {
-
-    document.getElementById("connectWalletBtn").addEventListener("click", connectWallet);
-  });
-
+// Stake NFT (local simulation)
 async function stakeNFT() {
-  console.log("Staking NFT...");
   const walletAddress = document.getElementById("walletAddress").innerText;
   if (walletAddress === "Not connected") {
     alert("Please connect your wallet first.");
@@ -106,23 +77,13 @@ async function stakeNFT() {
     return;
   }
 
-  console.log('Staking NFT with ID: ${nftid}');
-  document.getElementById("stakedNFTs").innerHTML += '<li>Staked NFT ID: ${nftid}</li>';
-
-  //add to staked nft list
   stakeNFTs.push(nftId);
 
-  //update the UI
   const stakedNFTsContainer = document.getElementById("stakedNFTs");
   stakedNFTsContainer.innerHTML = "";
-  stakedNFTs.forEach(id => {
-    stakedNFTsContainer.innerHTML += '<li>Staked NFT ID: ${id}</li>';
+  stakeNFTs.forEach((id) => {
+    stakedNFTsContainer.innerHTML += `<li>Staked NFT ID: ${id}</li>`;
   });
 
-  alert('NFT ${nftId} staked sucessfully!');
-  
-}
-
-function completeTask(taskId) {
-  console.log("Task completed:", taskId);
+  alert(`NFT ${nftId} staked successfully!`);
 }
