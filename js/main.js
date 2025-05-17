@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("stakeNFTBtn")?.addEventListener("click", stakeNFT);
 
   // ✅ Initialize TonConnectUI
-  const tonConnectUI = new window.TonConnectUI.TonConnectUI({
+  const tonConnectUI = new TonConnectUI({
     manifestUrl: 'https://raw.githubusercontent.com/Omariniesta/dapp/main/tonconnect-manifest.json',
     buttonRootId: 'ton-connect-btn'
   });

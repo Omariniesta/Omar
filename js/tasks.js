@@ -1,34 +1,47 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetchTasks();
-});
-
-function fetchTasks() {
-  fetch(tasksUrl)
-    .then(response => response.json())
-    .then(data => {
-      renderTasks(data);
-    })
-    .catch(error => {
-      console.error("Error fetching tasks:", error);
-    });
-}
-
-function renderTasks(tasks) {
   const taskContainer = document.getElementById("task-container");
-  taskContainer.innerHTML = "";
 
-  tasks.forEach(task => {
-    const taskCard = document.createElement("div");
-    taskCard.classList.add("task-card");
+  fetch("https://raw.githubusercontent.com/Omariniesta/Omar/main/tasks.json")
+    .then((response) => response.json())
+    .then((tasks) => {
+      tasks.forEach((task) => {
+        const taskCard = document.createElement("div");
+        taskCard.className = "task-card";
 
-    taskCard.innerHTML = 
-      <div>
-        <p>${task.title}</p>
-        <button onclick="completeTask('${task.id}'); window.open('${task.link}', '_blank')">Do Task</button>
-      </div>
-      <span>+${task.points} pts</span>
-    ;
+        const title = document.createElement("h4");
+        title.textContent = task.title;
+        taskCard.appendChild(title);
 
-    taskContainer.appendChild(taskCard);
-  });
-}
+        const description = document.createElement("p");
+        description.textContent = task.description;
+        taskCard.appendChild(description);
+
+        const points = document.createElement("p");
+        points.textContent = `Points: ${task.points}`;
+        taskCard.appendChild(points);
+
+        const actionButton = document.createElement("button");
+        actionButton.className = "link-btn";
+
+        if (task.action === "checkin") {
+          actionButton.textContent = "Check In";
+          actionButton.addEventListener("click", () => {
+            // Implement check-in functionality here
+            alert("Checked in successfully!");
+          });
+        } else {
+          actionButton.textContent = "Go";
+          actionButton.addEventListener("click", () => {
+            window.open(task.action, "_blank");
+          });
+        }
+
+        taskCard.appendChild(actionButton);
+        taskContainer.appendChild(taskCard);
+      });
+    })
+    .catch((error) => {
+      console.error("Error loading tasks:", error);
+      taskContainer.innerHTML = "<p>Failed to load tasks. Please try again later.</p>";
+    });
+});
